@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useRecipeStore } from '../recipeStore';
 
-const RecipeList = ({ recipes }) => {
+const RecipeList = () => {
+  const { recipes } = useRecipeStore();
+
   return (
     <ul>
       {recipes.map((recipe) => (
