@@ -1,47 +1,19 @@
-import { writable } from 'svelte/store';
+import create from 'zustand';
 
-export const recipeStore = writable({
+export const useRecipeStore = create((set) => ({
   recipes: [],
   favorites: [],
   recommendations: [],
   searchTerm: '',
-});
-
-export function useRecipeStore() {
-  const { subscribe, update } = recipeStore;
-
-  return {
-    subscribe,
-    update,
-    get recipes() {
-      return recipeStore.subscribe((state) => state.recipes);
-    },
-    get favorites() {
-      return recipeStore.subscribe((state) => state.favorites);
-    },
-    get recommendations() {
-      return recipeStore.subscribe((state) => state.recommendations);
-    },
-    get searchTerm() {
-      return recipeStore.subscribe((state) => state.searchTerm);
-    },
-    setSearchTerm: (term) => {
-      update((state) => ({ ...state, searchTerm: term }));
-    },
-    addRecipe: (recipe) => {
-      update((state) => ({ ...state, recipes: [...state.recipes, recipe] }));
-    },
-    updateRecipe: (recipe) => {
-      update((state) => ({
-        ...state,
-        recipes: state.recipes.map((r) => (r.id === recipe.id ? recipe : r)),
-      }));
-    },
-    deleteRecipe: (id) => {
-      update((state) => ({
-        ...state,
-        recipes: state.recipes.filter((r) => r.id !== id),
-      }));
-    },
-  };
-}
+  setRecipes: (recipes) => set({ recipes }),
+  setFavorites: (favorites) => set({ favorites }),
+  setRecommendations: (recommendations) => set({ recommendations }),
+  setSearchTerm: (term) => set({ searchTerm: term }),
+  addRecipe: (recipe) => set((state) => ({ recipes: [...state.recipes, recipe] })),
+  updateRecipe: (recipe) => set((state) => ({
+    recipes: state.recipes.map((r) => (r.id === recipe.id ? recipe : r)),
+  })),
+  deleteRecipe: (id) => set((state) => ({
+    recipes: state.recipes.filter((r) => r.id !== id),
+  })),
+}));
