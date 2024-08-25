@@ -28,5 +28,20 @@ export function useRecipeStore() {
     setSearchTerm: (term) => {
       update((state) => ({ ...state, searchTerm: term }));
     },
+    addRecipe: (recipe) => {
+      update((state) => ({ ...state, recipes: [...state.recipes, recipe] }));
+    },
+    updateRecipe: (recipe) => {
+      update((state) => ({
+        ...state,
+        recipes: state.recipes.map((r) => (r.id === recipe.id ? recipe : r)),
+      }));
+    },
+    deleteRecipe: (id) => {
+      update((state) => ({
+        ...state,
+        recipes: state.recipes.filter((r) => r.id !== id),
+      }));
+    },
   };
 }
