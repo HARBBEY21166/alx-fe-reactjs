@@ -1,18 +1,15 @@
-import create from 'zustand';
+import { writable } from 'svelte/store';
 
-const useRecipeStore = create((set) => ({
+export const recipeStore = writable({
   recipes: [],
-  addRecipe: (recipe) => set((state) => ({ recipes: [...state.recipes, recipe] })),
-  updateRecipe: (id, updatedRecipe) =>
-    set((state) => ({
-      recipes: state.recipes.map((recipe) =>
-        recipe.id === id ? updatedRecipe : recipe
-      ),
-    })),
-  deleteRecipe: (id) =>
-    set((state) => ({
-      recipes: state.recipes.filter((recipe) => recipe.id !== id),
-    })),
-}));
+  setSearchTerm: '',
+  searchResults: [],
+});
 
-export default useRecipeStore;
+export const setSearchTerm = (term) => {
+  recipeStore.update((store) => ({ ...store, searchTerm: term }));
+};
+
+export const getSearchTerm = () => {
+  return recipeStore.searchTerm;
+};
