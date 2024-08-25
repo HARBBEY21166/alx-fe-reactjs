@@ -4,6 +4,7 @@ export const recipeStore = writable({
   recipes: [],
   favorites: [],
   recommendations: [],
+  searchTerm: '',
 });
 
 export function useRecipeStore() {
@@ -20,6 +21,12 @@ export function useRecipeStore() {
     },
     get recommendations() {
       return recipeStore.subscribe((state) => state.recommendations);
+    },
+    get searchTerm() {
+      return recipeStore.subscribe((state) => state.searchTerm);
+    },
+    setSearchTerm: (term) => {
+      update((state) => ({ ...state, searchTerm: term }));
     },
   };
 }
