@@ -2,14 +2,24 @@ import { writable } from 'svelte/store';
 
 export const recipeStore = writable({
   recipes: [],
-  setSearchTerm: '',
-  searchResults: [],
+  favorites: [],
+  recommendations: [],
 });
 
-export const setSearchTerm = (term) => {
-  recipeStore.update((store) => ({ ...store, searchTerm: term }));
-};
+export function useRecipeStore() {
+  const { subscribe, update } = recipeStore;
 
-export const getSearchTerm = () => {
-  return recipeStore.searchTerm;
-};
+  return {
+    subscribe,
+    update,
+    get recipes() {
+      return recipeStore.subscribe((state) => state.recipes);
+    },
+    get favorites() {
+      return recipeStore.subscribe((state) => state.favorites);
+    },
+    get recommendations() {
+      return recipeStore.subscribe((state) => state.recommendations);
+    },
+  };
+}
