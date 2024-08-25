@@ -11,6 +11,10 @@ import SearchBar from './SearchBar';
 import RecipeList from './RecipeList';
 import FavoritesList from './FavoritesList';
 import RecommendationsList from './RecommendationsList';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Home } from './Home';
+import { Recipes } from './Recipes';
+import { RecipeDetail } from './RecipeDetail';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -37,6 +41,24 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+
+         <BrowserRouter>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/recipes">Recipes</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/:id" element={<RecipeDetail />} />
+      </Routes>
+    </BrowserRouter>
 
       <div>
         <h1>Recipe Sharing App</h1>
