@@ -9,12 +9,12 @@ import BlogPost from './BlogPost';
 const App = () => {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <ProtectedRoute path="/profile" component={Profile} />
-        <Route path="/users/:userId" component={UserProfile} />
-        <Route path="/blog/:postId" component={BlogPost} />
-      </Switch>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <ProtectedRoute path="/profile" element={<Profile />} />
+        <Route path="/users/:userId" element={<UserProfile />} />
+        <Route path="/blog/:postId" element={<BlogPost />} />
+      </Routes>
     </BrowserRouter>
   );
 };
