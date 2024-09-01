@@ -8,6 +8,7 @@ const Dashboard = () => {
   return (
     <div>
       Welcome, {user.name}!
+      <button onClick={() => logout()}>Logout</button>
     </div>
   );
 };
