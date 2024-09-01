@@ -1,4 +1,3 @@
-// src/__tests__/TodoList.test.js
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { TodoList } from '../TodoList';
