@@ -1,21 +1,15 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = localStorage.getItem('isLoggedIn') === 'true';
+const ProtectedRoute = ({ element }) => {
+  const { user } = useAuth();
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-  );
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return element ? React.cloneElement(element, { user }) : <Outlet />;
 };
 
 export default ProtectedRoute;
