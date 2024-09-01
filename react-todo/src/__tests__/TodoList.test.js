@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import TodoList from '../TodoList';
 
 describe('TodoList Component', () => {
+
     test('renders correctly with initial todos', () => {
         render(<TodoList />);
         expect(screen.getByText('Learn React')).toBeInTheDocument();
@@ -27,7 +28,31 @@ describe('TodoList Component', () => {
 
     test('deletes a todo', () => {
         render(<TodoList />);
-        fireEvent.click(screen.getByText('Delete', { selector: 'button' }));
+        fireEvent.click(screen.getAllByText('Delete')[0]);
         expect(screen.queryByText('Learn React')).not.toBeInTheDocument();
     });
+
+    test('prevents adding empty todo', () => {
+        render(<TodoList />);
+        fireEvent.click(screen.getByText('Add Todo'));
+        expect(screen.queryByText('')).not.toBeInTheDocument();
+    });
+
+    test('does not toggle completion on delete click', () => {
+        render(<TodoList />);
+        const todoItem = screen.getByText('Learn React');
+        fireEvent.click(screen.getAllByText('Delete')[0]);
+        expect(todoItem).not.toHaveStyle('text-decoration: line-through');
+    });
+
+    test('form elements have proper labels for accessibility', () => {
+        render(<TodoList />);
+        expect(screen.getByLabelText('Add Todo')).toBeInTheDocument();
+    });
+
+    test('matches snapshot', () => {
+        const { asFragment } = render(<TodoList />);
+        expect(asFragment()).toMatchSnapshot();
+    });
+
 });
