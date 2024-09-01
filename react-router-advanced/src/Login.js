@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from './context/authContext';
 import { login } from './api/authApi';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
+  const { login: authLogin } = useContext(AuthContext);
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const response = await login(username, password);
+    const response = await authLogin(username, password);
     if (response.success) {
       history.push('/dashboard');
     } else {
