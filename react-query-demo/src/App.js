@@ -1,20 +1,36 @@
-// src/App.js
 import React from 'react';
-import { useQuery } from 'react-query';
-import { fetchUser } from './api/userApi';
+import { useContext } from 'react';
+import { AuthProvider, AuthContext } from './context/authContext';
+import { login } from './api/authApi';
 
 const App = () => {
-  const { data, error, isLoading } = useQuery('user', fetchUser);
+  const { user, token, login: loginFunction, logout } = useContext(AuthContext);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const handleLogin = async (username, password) => {
+    const response = await loginFunction(username, password);
+    if (response.success) {
+      loginFunction(response.user, response.token);
+    } else {
+      alert('Invalid credentials');
+    }
+  };
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  return <div>User: {data.name}</div>;
+  return (
+    <AuthProvider>
+      {user ? (
+        <div>
+          Welcome, {user.name}!
+          <button onClick={logout}>Logout</button>
+        </div>
+      ) : (
+        <div>
+          <input type="text" placeholder="Username" />
+          <input type="password" placeholder="Password" />
+          <button onClick={handleLogin}>Login</button>
+        </div>
+      )}
+    </AuthProvider>
+  );
 };
 
 export default App;
