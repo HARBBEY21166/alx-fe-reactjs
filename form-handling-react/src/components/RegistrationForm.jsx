@@ -1,46 +1,61 @@
 import React, { useState } from 'react';
+import { register } from '../api/authApi';
+import { AuthContext } from '../context/authContext';
 
 const RegistrationForm = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState(null);
+  const { login } = useContext(AuthContext);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Basic validation logic to check that no fields are left empty
-    if (username && email && password) {
-      console.log('Form submitted successfully!');
-    } else {
-      setErrors({
-        username: !username ? 'Username is required' : '',
-        email: !email ? 'Email is required' : '',
-        password: !password ? 'Password is required' : '',
-      });
+
+    if (!username) {
+      setError('Username is required');
+      return;
+    }
+
+    if (!email) {
+      setError('Email is required');
+      return;
+    }
+
+    if (!password) {
+      setError('Password is required');
+      return;
+    }
+
+    try {
+      const response = await register(username, email, password);
+      if (response.success) {
+        login(username, password);
+      } else {
+        setError(response.error);
+      }
+    } catch (error) {
+      setError('Registration failed. Please try again.');
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} />
-        {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
-      </label>
+      <label>Username:</label>
+      <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
       <br />
-      <label>
-        Email:
-        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
-        {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
-      </label>
+
+      <label>Email:</label>
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <br />
-      <label>
-        Password:
-        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
-        {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-      </label>
+
+      <label>Password:</label>
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <br />
-      <button type="submit">Submit</button>
+
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+
+      <button type="submit">Register</button>
     </form>
   );
 };
