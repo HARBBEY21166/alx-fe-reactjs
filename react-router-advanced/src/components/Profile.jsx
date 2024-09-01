@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, Routes } from 'react-router-dom';
 
 const Profile = () => {
   return (
@@ -14,10 +14,10 @@ const Profile = () => {
         </li>
       </ul>
 
-      <Switch>
-        <Route path="/profile/details" component={ProfileDetails} />
-        <Route path="/profile/settings" component={ProfileSettings} />
-      </Switch>
+      <Routes>
+        <Route path="/profile/details" element={<ProfileDetails />} />
+        <Route path="/profile/settings" element={<ProfileSettings />} />
+      </Routes>
     </div>
   );
 };
