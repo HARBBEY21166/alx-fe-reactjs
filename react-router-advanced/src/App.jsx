@@ -13,7 +13,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <ProtectedRoute path="/profile" element={<Profile />} />
         <Route path="/users/:userId" element={<UserProfile />} />
-        <Route path="/blog/:postId" element={<BlogPost />} />
+        <Route path="/blog/:postId" element={<BlogPost />} /> {/* This route was already present */}
+        <Route path="/blog/:id" element={<BlogPost />} /> {/* Added this new route */}
       </Routes>
     </BrowserRouter>
   );
