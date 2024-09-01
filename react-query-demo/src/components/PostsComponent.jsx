@@ -1,4 +1,3 @@
-// src/PostsComponent.jsx
 import React from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
@@ -9,7 +8,7 @@ const fetchPosts = async () => {
 };
 
 const PostsComponent = () => {
-  const { data, error, isLoading, isFetching } = useQuery(
+  const { data, error, isLoading, isFetching, isError } = useQuery(
     'posts', // key
     fetchPosts, // function to fetch data
     {
@@ -24,7 +23,7 @@ const PostsComponent = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (isError) {
     return <div>Error: {error.message}</div>;
   }
 
