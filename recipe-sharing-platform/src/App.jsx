@@ -1,13 +1,14 @@
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
-import AddRecipeForm from './components/AddRecipeForm';  // Ensure this import is correct
+import RecipeDetail from './components/RecipeDetail'; // Import RecipeDetail
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/add-recipe" element={<AddRecipeForm />} /> {/* Check this route */}
+        <Route path="/recipe/:id" element={<RecipeDetail />} /> {/* Add RecipeDetail route */}
       </Routes>
     </Router>
   );
