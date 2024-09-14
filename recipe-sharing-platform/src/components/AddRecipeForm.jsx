@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
-  const [steps, setSteps] = useState(''); // Add state for steps
+  const [steps, setSteps] = useState('');
   const [errors, setErrors] = useState({});
 
   const validate = () => {
     const newErrors = {};
     if (!title.trim()) newErrors.title = 'Title is required';
     if (!ingredients.trim()) newErrors.ingredients = 'Ingredients are required';
-    if (!steps.trim()) newErrors.steps = 'Steps are required'; // Validate steps
+    if (!steps.trim()) newErrors.steps = 'Steps are required';
     return newErrors;
   };
 
@@ -22,7 +22,6 @@ const AddRecipeForm = () => {
     } else {
       // Handle form submission
       console.log('Form Submitted:', { title, ingredients, steps });
-      // Clear form fields and errors
       setTitle('');
       setIngredients('');
       setSteps('');
@@ -33,7 +32,7 @@ const AddRecipeForm = () => {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Add New Recipe</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 shadow-md p-6 bg-white rounded-md">
         <div>
           <label htmlFor="title" className="block text-lg font-semibold">Title</label>
           <input
@@ -41,7 +40,7 @@ const AddRecipeForm = () => {
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className={`w-full p-2 border ${errors.title ? 'border-red-500' : 'border-gray-300'} rounded`}
+            className={`w-full p-2 border ${errors.title ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
           />
           {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
         </div>
@@ -51,7 +50,7 @@ const AddRecipeForm = () => {
             id="ingredients"
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
-            className={`w-full p-2 border ${errors.ingredients ? 'border-red-500' : 'border-gray-300'} rounded`}
+            className={`w-full p-2 border ${errors.ingredients ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
           />
           {errors.ingredients && <p className="text-red-500 text-sm">{errors.ingredients}</p>}
         </div>
@@ -61,11 +60,11 @@ const AddRecipeForm = () => {
             id="steps"
             value={steps}
             onChange={(e) => setSteps(e.target.value)}
-            className={`w-full p-2 border ${errors.steps ? 'border-red-500' : 'border-gray-300'} rounded`}
+            className={`w-full p-2 border ${errors.steps ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
           />
           {errors.steps && <p className="text-red-500 text-sm">{errors.steps}</p>}
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 shadow-md">
           Add Recipe
         </button>
       </form>
