@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
+  const [steps, setSteps] = useState(''); // Add state for steps
   const [errors, setErrors] = useState({});
 
   const validate = () => {
     const newErrors = {};
     if (!title.trim()) newErrors.title = 'Title is required';
     if (!ingredients.trim()) newErrors.ingredients = 'Ingredients are required';
-    if (!instructions.trim()) newErrors.instructions = 'Instructions are required';
+    if (!steps.trim()) newErrors.steps = 'Steps are required'; // Validate steps
     return newErrors;
   };
 
@@ -21,11 +21,11 @@ const AddRecipeForm = () => {
       setErrors(validationErrors);
     } else {
       // Handle form submission
-      console.log('Form Submitted:', { title, ingredients, instructions });
+      console.log('Form Submitted:', { title, ingredients, steps });
       // Clear form fields and errors
       setTitle('');
       setIngredients('');
-      setInstructions('');
+      setSteps('');
       setErrors({});
     }
   };
@@ -56,14 +56,14 @@ const AddRecipeForm = () => {
           {errors.ingredients && <p className="text-red-500 text-sm">{errors.ingredients}</p>}
         </div>
         <div>
-          <label htmlFor="instructions" className="block text-lg font-semibold">Instructions</label>
+          <label htmlFor="steps" className="block text-lg font-semibold">Preparation Steps</label>
           <textarea
-            id="instructions"
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
-            className={`w-full p-2 border ${errors.instructions ? 'border-red-500' : 'border-gray-300'} rounded`}
+            id="steps"
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
+            className={`w-full p-2 border ${errors.steps ? 'border-red-500' : 'border-gray-300'} rounded`}
           />
-          {errors.instructions && <p className="text-red-500 text-sm">{errors.instructions}</p>}
+          {errors.steps && <p className="text-red-500 text-sm">{errors.steps}</p>}
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
           Add Recipe
