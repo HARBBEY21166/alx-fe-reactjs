@@ -42,11 +42,22 @@ function Search() {
         <div>
           <img src={userData.avatar_url} alt={userData.login} />
           <h2>{userData.login}</h2>
-          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">View Profile</a>
-        </div>
-      )}
+          {results.length > 0 && (
+          <ul>
+            {results.map((user) => (
+              <li key={user.id}>
+                <img src={user.avatar_url} alt={user.login} width="50" />
+                <p>{user.login}</p>
+                <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+                  View Profile
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default Search;
