@@ -48,6 +48,7 @@ function Search() {
               <li key={user.id}>
                 <img src={user.avatar_url} alt={user.login} width="50" />
                 <p>{user.login}</p>
+                <p>Location: {user.location ? user.location : "Not available"}</p>
                 <a href={user.html_url} target="_blank" rel="noopener noreferrer">
                   View Profile
                 </a>
